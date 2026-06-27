@@ -1,0 +1,25 @@
+package br.com.raizes.dto;
+
+import br.com.raizes.enums.StatusPedido;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class PedidoDTO {
+    private Long id;
+    private Long clienteId;
+    private Long unidadeId;
+    private LocalDateTime dataPedido;
+    private StatusPedido status;
+    private BigDecimal valorTotal;
+    private List<ItemPedidoDTO> itens;
+}
