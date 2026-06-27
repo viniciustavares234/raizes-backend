@@ -35,6 +35,7 @@ public class PedidoMapper {
                 pedido.getDataPedido(),
                 pedido.getStatus(),
                 pedido.getValorTotal(),
+                pedido.getCanalPedido(),
                 itensDTO
         );
     }
@@ -49,6 +50,7 @@ public class PedidoMapper {
         if (dto == null) return null;
         
         Pedido pedido = new Pedido();
+        pedido.setCanalPedido(dto.getCanalPedido());
         
         if (dto.getClienteId() != null) {
             Cliente cliente = new Cliente();

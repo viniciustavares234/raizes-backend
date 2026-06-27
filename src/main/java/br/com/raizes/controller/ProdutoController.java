@@ -29,8 +29,8 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProdutoDTO>> listarTodos() {
-        List<ProdutoDTO> produtos = produtoService.listarTodos().stream()
+    public ResponseEntity<List<ProdutoDTO>> listarTodos(@RequestParam(required = false) Long unidadeId) {
+        List<ProdutoDTO> produtos = produtoService.listarTodos(unidadeId).stream()
                 .map(produtoMapper::toDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(produtos);

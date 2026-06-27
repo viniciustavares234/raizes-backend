@@ -1,6 +1,7 @@
 package br.com.raizes.service;
 
 import br.com.raizes.entity.Cliente;
+import br.com.raizes.exception.ResourceNotFoundException;
 import br.com.raizes.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class ClienteService {
 
     public Cliente buscarPorId(Long id) {
         return clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado com o ID: " + id));
     }
 
     public List<Cliente> listarTodos() {

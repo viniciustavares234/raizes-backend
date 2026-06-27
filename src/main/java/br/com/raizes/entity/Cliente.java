@@ -40,4 +40,7 @@ public class Cliente {
     private LocalDate dataCadastro;
 
     private String status;
+
+    @Column(nullable = false)
+    private Boolean consentimento;
 }

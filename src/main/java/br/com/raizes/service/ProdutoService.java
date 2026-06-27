@@ -1,6 +1,7 @@
 package br.com.raizes.service;
 
 import br.com.raizes.entity.Produto;
+import br.com.raizes.exception.ResourceNotFoundException;
 import br.com.raizes.repository.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,13 @@ public class ProdutoService {
 
     public Produto buscarPorId(Long id) {
         return produtoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + id));
     }
 
-    public List<Produto> listarTodos() {
+    public List<Produto> listarTodos(Long unidadeId) {
+        if (unidadeId != null) {
+            return produtoRepository.findByUnidadeId(unidadeId);
+        }
         return produtoRepository.findAll();
     }
 

@@ -1,5 +1,6 @@
 package br.com.raizes.entity;
 
+import br.com.raizes.enums.CanalPedido;
 import br.com.raizes.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,10 @@ public class Pedido {
     private StatusPedido status;
 
     private BigDecimal valorTotal;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CanalPedido canalPedido;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ItemPedido> itens;

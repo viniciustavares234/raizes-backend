@@ -1,5 +1,6 @@
 package br.com.raizes.dto;
 
+import br.com.raizes.enums.CanalPedido;
 import br.com.raizes.enums.StatusPedido;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,5 +22,6 @@ public class PedidoDTO {
     private LocalDateTime dataPedido;
     private StatusPedido status;
     private BigDecimal valorTotal;
+    private CanalPedido canalPedido;
     private List<ItemPedidoDTO> itens;
 }

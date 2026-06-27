@@ -17,7 +17,8 @@ public class ClienteMapper {
                 cliente.getEmail(),
                 cliente.getTelefone(),
                 cliente.getDataCadastro(),
-                cliente.getStatus()
+                cliente.getStatus(),
+                cliente.getConsentimento()
         );
     }
 
@@ -29,6 +30,7 @@ public class ClienteMapper {
         cliente.setEmail(dto.getEmail());
         cliente.setSenha(dto.getSenha());
         cliente.setTelefone(dto.getTelefone());
+        cliente.setConsentimento(dto.getConsentimento());
         return cliente;
     }
 }

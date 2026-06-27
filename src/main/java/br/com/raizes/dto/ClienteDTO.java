@@ -20,4 +20,5 @@ public class ClienteDTO {
     private String telefone;
     private LocalDate dataCadastro;
     private String status;
+    private Boolean consentimento;
 }
