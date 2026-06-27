@@ -10,9 +10,9 @@ API backend para o sistema de e-commerce e gestão da rede Raízes do Nordeste.
 - **Maven 3.9+**
 - **Docker** (recomendado) ou uma instância local do **PostgreSQL 15+**
 
-### 2. Variáveis de Ambiente (`.env.example`)
+### 2. Variáveis de Ambiente
 
-As configurações da aplicação estão no arquivo `src/main/resources/application.properties`. Não há necessidade de um arquivo `.env`. As variáveis principais são:
+As configurações da aplicação estão no arquivo `src/main/resources/application.properties` e podem ser sobrescritas por variáveis de ambiente. Use `.env.example` apenas como referência; não suba arquivos `.env` reais para o GitHub.
 
 ```properties
 # PostgreSQL
@@ -21,9 +21,10 @@ DB_USER=postgres
 DB_PASSWORD=senha
 
 # JWT
-JWT_SECRET=404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+JWT_SECRET=UmFpemVzTm9yZGVzdGVEZXZlbG9wbWVudFNlY3JldEtleTIwMjY=
+JWT_EXPIRATION=86400000
 ```
-*O projeto já usa esses valores como padrão, então você não precisa alterá-los para o ambiente de desenvolvimento.*
+*O projeto usa valores padrão de desenvolvimento. Em produção, configure valores próprios por variável de ambiente.*
 
 ### 3. Configuração do Banco de Dados
 
@@ -43,7 +44,7 @@ docker run --name raizes-postgres -e POSTGRES_DB=raizes -e POSTGRES_USER=postgre
     ```bash
     mvn spring-boot:run
     ```
-A API estará disponível em `http://localhost:8080`.
+A API estará disponível em `http://localhost:8081`.
 
 ### 5. Migrations e Seed
 
@@ -53,7 +54,7 @@ A API estará disponível em `http://localhost:8080`.
 ### 6. Documentação da API (Swagger)
 
 Com a aplicação rodando, acesse a documentação interativa no seu navegador:
-- **URL:** [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- **URL:** [http://localhost:8081/swagger-ui/index.html](http://localhost:8081/swagger-ui/index.html)
 
 ### 7. Coleção de Testes (Postman)
 
@@ -62,5 +63,5 @@ Com a aplicação rodando, acesse a documentação interativa no seu navegador:
     - Selecione o arquivo `raizes-backend.postman_collection.json` que está na raiz deste repositório.
 
 2.  **Configurar Variáveis:**
-    - A coleção usa a variável `{{baseUrl}}`, que já vem pré-configurada como `http://localhost:8080`.
+    - A coleção usa a variável `{{baseUrl}}`, que já vem pré-configurada como `http://localhost:8081`.
     - Após fazer login (`/auth/login`), copie o token da resposta e cole na variável `{{token}}` da coleção para autenticar as requisições protegidas.

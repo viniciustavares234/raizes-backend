@@ -1,4 +1,20 @@
 HELP.md
+
+### Environment / local config ###
+.env
+.env.*
+!.env.example
+application-local.properties
+application-*.local.properties
+
+### Logs ###
+*.log
+logs/
+
+### OS files ###
+.DS_Store
+Thumbs.db
+
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
