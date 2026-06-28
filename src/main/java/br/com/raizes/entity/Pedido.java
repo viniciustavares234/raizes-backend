@@ -1,6 +1,7 @@
 package br.com.raizes.entity;
 
 import br.com.raizes.enums.CanalPedido;
+import br.com.raizes.enums.FormaPagamento;
 import br.com.raizes.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class Pedido {
     @JoinColumn(name = "unidade_id")
     private Unidade unidade;
 
-    private LocalDateTime dataPedido;
+    private LocalDateTime dataCriacao;
 
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
@@ -42,6 +43,10 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CanalPedido canalPedido;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private FormaPagamento formaPagamento;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ItemPedido> itens;

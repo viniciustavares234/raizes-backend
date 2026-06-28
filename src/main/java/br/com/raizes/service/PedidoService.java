@@ -42,7 +42,7 @@ public class PedidoService {
         validarEstoque(pedido);
 
         // TODO: calcular valor total
-        pedido.setDataPedido(LocalDateTime.now());
+        pedido.setDataCriacao(LocalDateTime.now());
         pedido.setStatus(StatusPedido.AGUARDANDO_PAGAMENTO);
         
         if (pedido.getItens() != null) {

@@ -34,7 +34,7 @@ public class PedidoController {
 
     @PostMapping
     @Operation(summary = "Cria um novo pedido", security = @SecurityRequirement(name = "bearerAuth"))
-    public ResponseEntity<PedidoDTO> criar(@RequestBody PedidoCreateDTO dto) {
+    public ResponseEntity<PedidoDTO> criar(@Valid @RequestBody PedidoCreateDTO dto) {
         Pedido pedido = pedidoMapper.toEntity(dto);
         Pedido pedidoSalvo = pedidoService.criar(pedido);
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidoMapper.toDTO(pedidoSalvo));
