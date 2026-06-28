@@ -18,7 +18,12 @@ public class ClienteMapper {
                 cliente.getTelefone(),
                 cliente.getDataCadastro(),
                 cliente.getStatus(),
-                cliente.getConsentimento()
+                cliente.getConsentimento(),
+                cliente.getDataConsentimento(),
+                cliente.getVersaoTermoConsentimento(),
+                cliente.getFinalidadeConsentimento(),
+                cliente.getBaseLegalConsentimento(),
+                cliente.getDataAnonimizacao()
         );
     }
 
@@ -31,6 +36,7 @@ public class ClienteMapper {
         cliente.setSenha(dto.getSenha());
         cliente.setTelefone(dto.getTelefone());
         cliente.setConsentimento(dto.getConsentimento());
+        cliente.setVersaoTermoConsentimento(dto.getVersaoTermoConsentimento());
         return cliente;
     }
 }

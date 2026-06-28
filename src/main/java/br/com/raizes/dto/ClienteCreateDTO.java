@@ -16,4 +16,5 @@ public class ClienteCreateDTO {
     private String senha;
     private String telefone;
     private Boolean consentimento;
+    private String versaoTermoConsentimento;
 }

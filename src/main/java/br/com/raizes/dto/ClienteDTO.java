@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -21,4 +22,9 @@ public class ClienteDTO {
     private LocalDate dataCadastro;
     private String status;
     private Boolean consentimento;
+    private LocalDateTime dataConsentimento;
+    private String versaoTermoConsentimento;
+    private String finalidadeConsentimento;
+    private String baseLegalConsentimento;
+    private LocalDateTime dataAnonimizacao;
 }

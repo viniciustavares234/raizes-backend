@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "clientes")
@@ -43,4 +44,16 @@ public class Cliente {
 
     @Column(nullable = false)
     private Boolean consentimento;
+
+    private LocalDateTime dataConsentimento;
+
+    private String ipConsentimento;
+
+    private String versaoTermoConsentimento;
+
+    private String finalidadeConsentimento;
+
+    private String baseLegalConsentimento;
+
+    private LocalDateTime dataAnonimizacao;
 }
