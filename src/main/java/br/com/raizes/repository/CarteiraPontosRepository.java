@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface CarteiraPontosRepository extends JpaRepository<CarteiraPontos, Long> {
-    Optional<CarteiraPontos> findByClienteId(Long clienteId);
+    Optional<CarteiraPontos> findByUsuarioId(Long usuarioId);
 }

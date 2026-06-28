@@ -20,17 +20,17 @@ public class FidelidadeService {
     private final CarteiraPontosRepository carteiraRepository;
     private final MovimentacaoPontosRepository movimentacaoRepository;
 
-    public CarteiraPontosDTO consultarPontos(Long clienteId) {
-        CarteiraPontos carteira = carteiraRepository.findByClienteId(clienteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Carteira de pontos não encontrada para o cliente ID: " + clienteId));
+    public CarteiraPontosDTO consultarPontos(Long usuarioId) {
+        CarteiraPontos carteira = carteiraRepository.findByUsuarioId(usuarioId)
+                .orElseThrow(() -> new ResourceNotFoundException("Carteira de pontos não encontrada para o cliente ID: " + usuarioId));
 
-        return new CarteiraPontosDTO(clienteId, carteira.getSaldo());
+        return new CarteiraPontosDTO(usuarioId, carteira.getSaldo());
     }
 
     @Transactional
-    public CarteiraPontosDTO resgatarPontos(Long clienteId, Integer pontos, String descricao) {
-        CarteiraPontos carteira = carteiraRepository.findByClienteId(clienteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Carteira de pontos não encontrada para o cliente ID: " + clienteId));
+    public CarteiraPontosDTO resgatarPontos(Long usuarioId, Integer pontos, String descricao) {
+        CarteiraPontos carteira = carteiraRepository.findByUsuarioId(usuarioId)
+                .orElseThrow(() -> new ResourceNotFoundException("Carteira de pontos não encontrada para o cliente ID: " + usuarioId));
 
         if (carteira.getSaldo() < pontos) {
             throw new InsufficientStockException("Saldo de pontos insuficiente. Saldo atual: " + carteira.getSaldo());
@@ -47,6 +47,6 @@ public class FidelidadeService {
         movimentacao.setDescricao(descricao);
         movimentacaoRepository.save(movimentacao);
 
-        return new CarteiraPontosDTO(clienteId, carteira.getSaldo());
+        return new CarteiraPontosDTO(usuarioId, carteira.getSaldo());
     }
 }

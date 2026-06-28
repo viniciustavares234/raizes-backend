@@ -14,13 +14,13 @@ public class FidelidadeController {
 
     private final FidelidadeService fidelidadeService;
 
-    @GetMapping("/{clienteId}/pontos")
-    public ResponseEntity<CarteiraPontosDTO> consultarPontos(@PathVariable Long clienteId) {
-        return ResponseEntity.ok(fidelidadeService.consultarPontos(clienteId));
+    @GetMapping("/{usuarioId}/pontos")
+    public ResponseEntity<CarteiraPontosDTO> consultarPontos(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(fidelidadeService.consultarPontos(usuarioId));
     }
 
     @PostMapping("/resgatar")
     public ResponseEntity<CarteiraPontosDTO> resgatarPontos(@RequestBody ResgatePontosRequestDTO request) {
-        return ResponseEntity.ok(fidelidadeService.resgatarPontos(request.getClienteId(), request.getPontos(), request.getDescricao()));
+        return ResponseEntity.ok(fidelidadeService.resgatarPontos(request.getUsuarioId(), request.getPontos(), request.getDescricao()));
     }
 }
