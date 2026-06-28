@@ -12,6 +12,7 @@ import br.com.raizes.repository.RefreshTokenRepository;
 import br.com.raizes.repository.UsuarioRepository;
 import br.com.raizes.security.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
