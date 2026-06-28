@@ -1,5 +1,6 @@
 package br.com.raizes.dto;
 
+import br.com.raizes.enums.StatusPagamento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,5 @@ public class PagamentoDTO {
     private String metodoPagamento;
     private BigDecimal valor;
     private LocalDateTime dataPagamento;
-    private String status;
+    private StatusPagamento status;
 }

@@ -1,5 +1,6 @@
 package br.com.raizes.entity;
 
+import br.com.raizes.enums.StatusPagamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

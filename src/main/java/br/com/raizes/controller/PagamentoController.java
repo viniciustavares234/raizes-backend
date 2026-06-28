@@ -5,6 +5,7 @@ import br.com.raizes.dto.PagamentoDTO;
 import br.com.raizes.entity.Pagamento;
 import br.com.raizes.mapper.PagamentoMapper;
 import br.com.raizes.service.PagamentoService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
