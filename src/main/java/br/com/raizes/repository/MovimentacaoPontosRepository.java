@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MovimentacaoPontosRepository extends JpaRepository<MovimentacaoPontos, Long> {
-    List<MovimentacaoPontos> findByCarteiraId(Long carteiraId);
+    List<MovimentacaoPontos> findByCarteiraIdOrderByDataMovimentacaoDesc(Long carteiraId);
 }

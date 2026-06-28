@@ -12,15 +12,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResgatePontosRequestDTO {
+public class AdicionarPontosRequestDTO {
 
     @NotNull(message = "O ID do usuário é obrigatório.")
     private Long usuarioId;
 
     @NotNull(message = "A quantidade de pontos é obrigatória.")
-    @Min(value = 1, message = "A quantidade de pontos a resgatar deve ser no mínimo 1.")
+    @Min(value = 1, message = "A quantidade de pontos deve ser no mínimo 1.")
     private Integer pontos;
 
-    @NotBlank(message = "A descrição do resgate é obrigatória.")
+    @NotBlank(message = "A descrição é obrigatória.")
     private String descricao;
 }

@@ -19,10 +19,26 @@ public class PagamentoController {
     private final PagamentoMapper pagamentoMapper;
 
     @PostMapping
-    public ResponseEntity<PagamentoDTO> processarPagamento(@RequestBody PagamentoCreateDTO dto) {
+    @Operation(summary = "Cria um novo pagamento com status PENDENTE")
+    public ResponseEntity<PagamentoDTO> criarPagamento(@RequestBody PagamentoCreateDTO dto) {
         Pagamento pagamento = pagamentoMapper.toEntity(dto);
-        Pagamento pagamentoProcessado = pagamentoService.processarPagamento(pagamento);
+        Pagamento pagamentoProcessado = pagamentoService.criarPagamento(pagamento);
         return ResponseEntity.status(HttpStatus.CREATED).body(pagamentoMapper.toDTO(pagamentoProcessado));
+    }
+
+    @PostMapping("/simular")
+    @Operation(summary = "Simula o processamento e aprovação de um pagamento")
+    public ResponseEntity<PagamentoDTO> simularPagamento(@RequestBody PagamentoCreateDTO dto) {
+        Pagamento pagamento = pagamentoMapper.toEntity(dto);
+        Pagamento pagamentoProcessado = pagamentoService.simularPagamento(pagamento);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pagamentoMapper.toDTO(pagamentoProcessado));
+    }
+    
+    @PostMapping("/{id}/confirmar")
+    @Operation(summary = "Confirma um pagamento existente")
+    public ResponseEntity<PagamentoDTO> confirmarPagamento(@PathVariable Long id) {
+        Pagamento pagamento = pagamentoService.confirmarPagamento(id);
+        return ResponseEntity.ok(pagamentoMapper.toDTO(pagamento));
     }
 
     @GetMapping("/{id}")
