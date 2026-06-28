@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.EnumSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +27,14 @@ public class PedidoService {
 
     private final PedidoRepository pedidoRepository;
     private final EstoqueRepository estoqueRepository;
+
+    private static final Map<StatusPedido, EnumSet<StatusPedido>> TRANSICOES_PERMITIDAS = Map.of(
+            StatusPedido.AGUARDANDO_PAGAMENTO, EnumSet.of(StatusPedido.PAGO, StatusPedido.CANCELADO),
+            StatusPedido.PAGO, EnumSet.of(StatusPedido.EM_PREPARO, StatusPedido.CANCELADO),
+            StatusPedido.EM_PREPARO, EnumSet.of(StatusPedido.EM_ROTA, StatusPedido.CANCELADO),
+            StatusPedido.EM_ROTA, EnumSet.of(StatusPedido.ENTREGUE, StatusPedido.CANCELADO)
+            // Status ENTREGUE e CANCELADO são finais, não podem transicionar para outros.
+    );
 
     @Transactional
     public Pedido criar(Pedido pedido) {
@@ -77,9 +87,21 @@ public class PedidoService {
 
     public Pedido atualizarStatus(Long id, StatusPedido novoStatus) {
         Pedido pedido = buscarPorId(id);
-        // TODO: Validar transições de status permitidas
+        validarTransicaoStatus(pedido.getStatus(), novoStatus);
         pedido.setStatus(novoStatus);
         return pedidoRepository.save(pedido);
+    }
+
+    private void validarTransicaoStatus(StatusPedido statusAtual, StatusPedido novoStatus) {
+        if (statusAtual == novoStatus) {
+            return; // Nenhuma mudança, é válido.
+        }
+
+        EnumSet<StatusPedido> statusPermitidos = TRANSICOES_PERMITIDAS.get(statusAtual);
+
+        if (statusPermitidos == null || !statusPermitidos.contains(novoStatus)) {
+            throw new IllegalArgumentException("Transição de status inválida de " + statusAtual + " para " + novoStatus);
+        }
     }
     
     @Transactional

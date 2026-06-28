@@ -7,6 +7,7 @@ import br.com.raizes.dto.RefreshTokenRequest;
 import br.com.raizes.dto.UsuarioCreateDTO;
 import br.com.raizes.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UsuarioCreateDTO request) {
-        return ResponseEntity.ok(service.register(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.register(request));
     }
 
     @PostMapping("/login")

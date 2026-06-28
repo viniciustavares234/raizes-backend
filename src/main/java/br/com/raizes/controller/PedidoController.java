@@ -2,6 +2,7 @@ package br.com.raizes.controller;
 
 import br.com.raizes.dto.ErrorResponseDTO;
 import br.com.raizes.dto.PedidoCreateDTO;
+import br.com.raizes.dto.StatusUpdateDTO;
 import br.com.raizes.dto.PedidoDTO;
 import br.com.raizes.entity.Pedido;
 import br.com.raizes.enums.CanalPedido;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,21 +63,9 @@ public class PedidoController {
     @ApiResponse(responseCode = "400", description = "Status inválido", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     @ApiResponse(responseCode = "403", description = "Acesso negado")
     @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
-    public ResponseEntity<PedidoDTO> atualizarStatus(@PathVariable Long id, @RequestBody StatusUpdateDTO statusUpdate) {
+    public ResponseEntity<PedidoDTO> atualizarStatus(@PathVariable Long id, @Valid @RequestBody StatusUpdateDTO statusUpdate) {
         Pedido pedidoAtualizado = pedidoService.atualizarStatus(id, statusUpdate.getStatus());
         return ResponseEntity.ok(pedidoMapper.toDTO(pedidoAtualizado));
     }
 
-    // Classe auxiliar temporária
-    public static class StatusUpdateDTO {
-        private StatusPedido status;
-
-        public StatusPedido getStatus() {
-            return status;
-        }
-
-        public void setStatus(StatusPedido status) {
-            this.status = status;
-        }
-    }
 }

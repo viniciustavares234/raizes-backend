@@ -6,6 +6,7 @@ import br.com.raizes.service.EstoqueService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +29,13 @@ public class EstoqueController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Registra entrada de produtos no estoque", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<EstoqueDTO> darEntrada(@RequestBody MovimentacaoEstoqueRequestDTO request) {
-        return ResponseEntity.ok(estoqueService.darEntrada(request.getUnidadeId(), request.getProdutoId(), request.getQuantidade()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(estoqueService.darEntrada(request.getUnidadeId(), request.getProdutoId(), request.getQuantidade()));
     }
 
     @PostMapping("/saida")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Registra saída de produtos do estoque", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<EstoqueDTO> darSaida(@RequestBody MovimentacaoEstoqueRequestDTO request) {
-        return ResponseEntity.ok(estoqueService.darSaida(request.getUnidadeId(), request.getProdutoId(), request.getQuantidade()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(estoqueService.darSaida(request.getUnidadeId(), request.getProdutoId(), request.getQuantidade()));
     }
 }

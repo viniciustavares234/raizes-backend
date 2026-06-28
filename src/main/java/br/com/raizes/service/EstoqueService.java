@@ -9,8 +9,10 @@ import br.com.raizes.exception.InsufficientStockException;
 import br.com.raizes.exception.ResourceNotFoundException;
 import br.com.raizes.repository.EstoqueRepository;
 import br.com.raizes.repository.MovimentacaoEstoqueRepository;
-import br.com.raizes.repository.ProdutoRepository;
+import br.com.raizes.entity.Usuario;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +24,6 @@ public class EstoqueService {
 
     private final EstoqueRepository estoqueRepository;
     private final MovimentacaoEstoqueRepository movimentacaoEstoqueRepository;
-    private final ProdutoRepository produtoRepository;
 
     public EstoqueDTO consultarEstoque(Long unidadeId, Long produtoId) {
         Estoque estoque = findEstoque(unidadeId, produtoId);
@@ -35,7 +36,7 @@ public class EstoqueService {
         estoque.setQuantidade(estoque.getQuantidade() + quantidade);
         estoqueRepository.save(estoque);
 
-        registrarMovimentacao(produtoId, quantidade, TipoMovimentacao.ENTRADA, "Entrada manual de estoque");
+        registrarMovimentacao(estoque, quantidade, TipoMovimentacao.ENTRADA, "Entrada manual de estoque");
 
         return toDTO(estoque);
     }
@@ -49,22 +50,24 @@ public class EstoqueService {
         estoque.setQuantidade(estoque.getQuantidade() - quantidade);
         estoqueRepository.save(estoque);
 
-        registrarMovimentacao(produtoId, quantidade, TipoMovimentacao.SAIDA, "Saída manual de estoque");
+        registrarMovimentacao(estoque, quantidade, TipoMovimentacao.SAIDA, "Saída manual de estoque");
 
         return toDTO(estoque);
     }
 
-    private void registrarMovimentacao(Long produtoId, Integer quantidade, TipoMovimentacao tipo, String observacao) {
-        Produto produto = produtoRepository.findById(produtoId)
-                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + produtoId));
-
+    private void registrarMovimentacao(Estoque estoque, Integer quantidade, TipoMovimentacao tipo, String observacao) {
         MovimentacaoEstoque movimentacao = new MovimentacaoEstoque();
-        movimentacao.setProduto(produto);
+        movimentacao.setProduto(estoque.getProduto());
         movimentacao.setQuantidade(quantidade);
         movimentacao.setTipo(tipo);
         movimentacao.setDataMovimentacao(LocalDateTime.now());
         movimentacao.setObservacao(observacao);
-        // movimentacao.setUsuario(usuario); // TODO: Adicionar o usuário logado
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof Usuario) {
+            movimentacao.setUsuario((Usuario) authentication.getPrincipal());
+        }
+
         movimentacaoEstoqueRepository.save(movimentacao);
     }
 
