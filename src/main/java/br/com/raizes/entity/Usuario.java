@@ -1,14 +1,7 @@
 package br.com.raizes.entity;
 
 import br.com.raizes.enums.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +10,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -41,6 +36,33 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    private String nome;
+
+    @Column(unique = true)
+    private String cpf;
+
+    private String telefone;
+
+    private LocalDate dataCadastro;
+
+    private String status;
+
+    @Column(nullable = false)
+    private Boolean consentimento;
+
+    private LocalDateTime dataConsentimento;
+
+    private String ipConsentimento;
+
+    private String versaoTermoConsentimento;
+
+    private String finalidadeConsentimento;
+
+    private String baseLegalConsentimento;
+
+    private LocalDateTime dataAnonimizacao;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

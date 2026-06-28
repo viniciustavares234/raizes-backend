@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClienteDTO {
+public class UsuarioDTO {
     private Long id;
     private String nome;
     private String cpf;

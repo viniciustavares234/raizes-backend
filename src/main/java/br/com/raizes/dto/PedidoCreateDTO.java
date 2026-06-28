@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PedidoCreateDTO {
-    private Long clienteId;
+    private Long usuarioId;
     private Long unidadeId;
     private CanalPedido canalPedido;
     private List<ItemPedidoCreateDTO> itens;

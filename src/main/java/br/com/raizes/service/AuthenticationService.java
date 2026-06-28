@@ -3,8 +3,11 @@ package br.com.raizes.service;
 import br.com.raizes.dto.AuthenticationRequest;
 import br.com.raizes.dto.AuthenticationResponse;
 import br.com.raizes.dto.RefreshTokenRequest;
+import br.com.raizes.dto.UsuarioCreateDTO;
 import br.com.raizes.entity.RefreshToken;
 import br.com.raizes.entity.Usuario;
+import br.com.raizes.enums.Role;
+import br.com.raizes.mapper.UsuarioMapper;
 import br.com.raizes.repository.RefreshTokenRepository;
 import br.com.raizes.repository.UsuarioRepository;
 import br.com.raizes.security.JwtService;
@@ -12,9 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -25,6 +30,19 @@ public class AuthenticationService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final UsuarioMapper usuarioMapper;
+
+    @Transactional
+    public AuthenticationResponse register(UsuarioCreateDTO request) {
+        Usuario usuario = usuarioMapper.toEntity(request);
+        usuario.setSenha(passwordEncoder.encode(request.getSenha()));
+        usuario.setRole(Role.ROLE_USER);
+        usuario.setDataCadastro(LocalDate.now());
+        // TODO: set other fields from consent
+        usuarioRepository.save(usuario);
+        return gerarTokens(usuario);
+    }
 
     @Transactional
     public AuthenticationResponse login(AuthenticationRequest request) {

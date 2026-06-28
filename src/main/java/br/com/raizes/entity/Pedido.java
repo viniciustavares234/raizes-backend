@@ -25,8 +25,8 @@ public class Pedido {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "unidade_id")

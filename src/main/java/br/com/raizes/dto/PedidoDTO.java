@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PedidoDTO {
     private Long id;
-    private Long clienteId;
+    private Long usuarioId;
     private Long unidadeId;
     private LocalDateTime dataPedido;
     private StatusPedido status;

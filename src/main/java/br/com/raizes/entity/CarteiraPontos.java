@@ -19,8 +19,8 @@ public class CarteiraPontos {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     private Integer saldo;
 }
